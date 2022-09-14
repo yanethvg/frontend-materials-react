@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom';
-import MainRouter from "./MainRouters";
+import {Routers} from "./Routers";
+import { Menu } from "./components/basic/Menu";
 
 function App() {
 
   return (
    <BrowserRouter>
-    <MainRouter />
+      <Menu />
+      <Routers />
    </BrowserRouter>
   )
 }
