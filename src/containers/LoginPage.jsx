@@ -34,7 +34,7 @@ function LoginPage() {
   }
   return (
    <>
-    {Login(saveEmail, savePassword, clickSubmit)}
+    {Login(saveEmail, savePassword, clickSubmit,error)}
    </>
   );
 }
