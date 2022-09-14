@@ -1,8 +1,11 @@
 import React from 'react';
+import { Categories } from '../components/categories/Categories';
 
 function CategoriesPage() {
   return (
-    <h1>Categories</h1>
+    <>
+    <Categories></Categories>
+    </>
   );
 }
 
