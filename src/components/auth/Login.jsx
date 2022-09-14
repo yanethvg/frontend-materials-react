@@ -3,8 +3,6 @@ import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const  Login = (saveEmail, savePassword, clickSubmit, error)  =>{
-
-  console.log(error);
     return  (
         <Card style={{ width: '50rem', margin: "0 auto" }} >
         <div className="Auth-form-container m-5" >

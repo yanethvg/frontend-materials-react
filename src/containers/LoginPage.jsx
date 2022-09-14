@@ -30,7 +30,7 @@ function LoginPage() {
   };
 
   if (redirectToRefer) {
-    return <Route path="/" element={ <Navigate to="/" /> } />
+    return  <Navigate to="/"/>
   }
   return (
    <>
