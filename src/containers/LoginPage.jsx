@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../actions/loginAction";
 //react router dom
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function LoginPage() {
   //state
