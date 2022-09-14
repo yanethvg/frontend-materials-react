@@ -1,8 +1,9 @@
 import React from 'react';
+import { Register } from '../components/auth/Register';
 
 function RegisterPage() {
   return (
-    <h1>Register</h1>
+    <Register></Register>
   );
 }
 
