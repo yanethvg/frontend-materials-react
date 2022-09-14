@@ -44,12 +44,7 @@ const routes = [
     path: '/register',
     element: <RegisterPage />,
     text: 'Register'
-  },
-  {
-    path: '*',
-    element: <p>Not found</p>,
-    text: 'Not Found'
-  },
+  }
 ]
 
 function Routers() {
