@@ -13,8 +13,6 @@ function LoginPage() {
   const [password, savePassword] = useState("");
   //redux
   const dispatch = useDispatch();
-  //react router dom
-  
 
   const redirectToRefer = useSelector((state) => state.auth.redirectToRefer);
   const error = useSelector((state) => state.auth.error);

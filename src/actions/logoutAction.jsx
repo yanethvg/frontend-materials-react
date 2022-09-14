@@ -1,4 +1,5 @@
 import { COMPLETE_LOGOUT, START_LOGOUT, ERROR_LOGOUT } from "../types";
+import {notify} from '../components/utils/Notify';
 
 export function getLogout(access_token) {
   return (dispatch) => {
@@ -17,11 +18,12 @@ export function getLogout(access_token) {
         return response.json();
       })
       .then(function (response) {
-        console.log(response);
+        notify(response.message,  'success');
         dispatch(completeLogout());
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        notify(error.message, 'error');
         dispatch(errorLogout());
       });
   };

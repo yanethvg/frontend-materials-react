@@ -1,4 +1,5 @@
 import { START_LOGIN, COMPLETE_LOGIN,  ERROR_LOGIN } from "../types";
+import {notify} from '../components/utils/Notify';
 
 export function getLogin(user) {
     return (dispatch) => {
@@ -17,9 +18,11 @@ export function getLogin(user) {
         })
         .then(function (response) {
             if (response.errors) {
-            dispatch(errorLogin(response.errors));
+              notify(response.message, 'error');
+              dispatch(errorLogin(response.errors));
             } else {
-            dispatch(completeLogin(response));
+              notify('Login success', 'success');
+              dispatch(completeLogin(response));
             }
         })
         .catch((error) => {
