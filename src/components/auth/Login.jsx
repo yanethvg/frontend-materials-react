@@ -2,7 +2,7 @@ import React from "react";
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Login() {
+const  Login = (saveEmail, savePassword, clickSubmit)  =>{
     return  (
         <Card style={{ width: '50rem', margin: "0 auto" }} >
         <div className="Auth-form-container m-5" >
@@ -15,6 +15,7 @@ function Login() {
                   type="email"
                   className="form-control mt-1"
                   placeholder="Enter email"
+                  onChange={(e) => saveEmail(e.target.value)}
                 />
               </div>
               <div className="form-group mt-3">
@@ -23,10 +24,11 @@ function Login() {
                   type="password"
                   className="form-control mt-1"
                   placeholder="Enter password"
+                  onChange={(e) => savePassword(e.target.value)}
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" onClick={clickSubmit}>
                   Submit
                 </button>
               </div>
