@@ -10,13 +10,6 @@ import { RegisterPage } from "./containers/RegisterPage";
 import {PrivateRoute } from "./components/auth/PrivateRoute";
 
 
-{/* <PrivateRoute
-path="/get/categories"
-exact
-component={CategoryContainer}
-></PrivateRoute> */}
-
-
 const routes = [
   {
       path: '/profile',
@@ -41,9 +34,6 @@ const routes = [
 ]
 
 function Routers() {
-  
-  // const elements = useRoutes(routes);
-  // return elements
 
   return(
     <Routes>
@@ -60,9 +50,6 @@ function Routers() {
              <Route path={route.path} element={route.element}/>
           </Route>
         } )}
-        {/* <Route exact path='/' element={<PrivateRoute/>}>
-          <Route path='profile' element={<ProfilePage/>}/>
-        </Route> */}
     </Routes>
   )
 }

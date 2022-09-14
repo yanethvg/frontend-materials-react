@@ -33,9 +33,7 @@ import {
           ...state,
           error: action.payload,
           redirectToRefer: false,
-          role: undefined,
-          user: undefined,
-          token: undefined,
+          access:undefined
         };
       case START_LOGOUT:
         return {
@@ -47,7 +45,7 @@ import {
         return {
           ...state,
           error: null,
-          token: undefined,
+          access:undefined,
           redirectToRefer: false,
         };
       case ERROR_LOGOUT:

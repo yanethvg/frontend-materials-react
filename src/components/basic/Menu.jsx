@@ -8,14 +8,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import {LinkContainer} from 'react-router-bootstrap';
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-// import { getLogout } from "../../actions/logoutAction";
+import { getLogout } from "../../actions/logoutAction";
+import Button from 'react-bootstrap/Button';
 
 function Menu() {
     const dispatch = useDispatch();
 
     const auth = useSelector(state => state.auth.access);
     
-    // const logout = () => dispatch(getlogout());
+    const logout = () => dispatch(getLogout(auth.access_token));
 
 
     return (
@@ -43,6 +44,7 @@ function Menu() {
                     </LinkContainer>
                     )
                 )}
+                <Button variant="secondary" onClick={() => logout(() => history.push("/"))}>Logout</Button>
                 </>
             )}
             </Nav>
