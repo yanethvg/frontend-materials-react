@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const notify = (message, type) => toast(`${message}`, {
     type: type,
     theme: "colored",
-    autoClose: false,
     icon: true,
     draggable: true,
     autoClose: 1000,

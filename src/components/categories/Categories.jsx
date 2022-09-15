@@ -1,26 +1,33 @@
-import React,{useEffect} from 'react';
+import React,{useCallback, useEffect , useState} from 'react';
 //boostrap-react
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../../actions/getCategoriesAction";
+import CustomPagination from '../basic/CustomPagination';
 
 function Categories() {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth.access);
-
-    useEffect(() => {
-        const loadCategories = () => dispatch(getCategoriesAction(auth.access_token));
-        loadCategories();
-      }, [dispatch, auth.access_token]);
+    const [page, setPage] = React.useState(1);
 
     const categories = useSelector((state) => state.categories.categories);
-    console.log(categories);
+    const total = useSelector((state) => state.categories.pages);
+
+    const handleChangePage = useCallback((page) => {
+        setPage(page);
+    }, []);
+
+    useEffect(() => {
+        const loadCategories = () => dispatch(getCategoriesAction(auth.access_token, page));
+        loadCategories();
+      }, [ dispatch, auth.access_token, page]);
+
     return (
         <>
-        <h1>Categories</h1>
-        <Table striped bordered hover variant="dark">
+        <h1 className='d-flex justify-content-center'>Categories</h1>
+        <Table striped bordered hover variant="dark" className='mt-3'>
         <thead>
             <tr>
             <th>Id</th>
@@ -45,6 +52,16 @@ function Categories() {
                 ))}
         </tbody>
         </Table>
+       <div className='d-flex justify-content-center'>
+            {total > 1 && (
+                <CustomPagination 
+                className="justify-content-center"
+                total={ total }
+                current={page}
+                onChangePage={handleChangePage}
+                />
+            )}
+       </div>
         </>
     );
 }

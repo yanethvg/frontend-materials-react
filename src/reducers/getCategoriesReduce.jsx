@@ -9,6 +9,7 @@ import {
     error: null,
     loading: false,
     messageError: null,
+    pages: null,
   }
   
   export default function (state = initialState, action) {
@@ -21,10 +22,11 @@ import {
         }
       case COMPLETE_GET_CATEGORIES:
         return {
-          ...state,
-          categories: action.payload,
-          error: false,
-          loading: false,
+        ...state,
+        categories: action.payload.data,
+        error: false,
+        loading: false,
+        pages: action.payload.meta.last_page,
         }
       case ERROR_GET_CATEGORIES:
         return {

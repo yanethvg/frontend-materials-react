@@ -22,7 +22,6 @@ export function getLogout(access_token) {
         dispatch(completeLogout());
       })
       .catch((error) => {
-        // console.log(error);
         notify(error.message, 'error');
         dispatch(errorLogout());
       });

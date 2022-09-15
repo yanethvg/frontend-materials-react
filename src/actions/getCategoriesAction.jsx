@@ -4,10 +4,10 @@ import {
     ERROR_GET_CATEGORIES,
   } from "../types";
   
-  export function getCategoriesAction(access_token) {
+  export function getCategoriesAction(access_token,page) {
     return (dispatch) => {
       dispatch(startGetCategories());
-      fetch(`http://localhost/api/categories`, {
+      fetch(`http://localhost/api/categories/paginate?page=${page}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -17,7 +17,7 @@ import {
           return response.json();
         })
         .then(function (response) {
-          dispatch(completeGetCategories(response.data));
+          dispatch(completeGetCategories(response));
         })
         .catch((error) => {
           dispatch(errorGetCategories(error));
