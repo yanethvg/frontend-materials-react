@@ -4,11 +4,11 @@ import {
     ERROR_CREATE_CATEGORY,
   } from "../types";
 import {API_URL} from '../config';
+import {notify} from '../components/utils/Notify';
   
   export function createCategoryAction(category, token) {
     return (dispatch) => {
       dispatch(startCreateCategory());
-      // get auth api
       fetch(`${API_URL}/api/categories`, {
         method: "POST",
         headers: {
@@ -22,11 +22,11 @@ import {API_URL} from '../config';
           return response.json();
         })
         .then(function (response) {
-          if (response.err) {
-            console.log(response.err);
-            dispatch(errorCreateCategory(response.err.message));
+          if (response.errors) {
+            notify(response.message, 'error');
+            dispatch(errorCreateCategory(response.errors));
           } else {
-            console.log(response);
+            notify('Created category successfully', 'success');
             dispatch(completeCreateCategory(response));
           }
         })
@@ -45,7 +45,7 @@ import {API_URL} from '../config';
     payload: response,
   });
   
-  export const errorCreateCategory = (message) => ({
+  export const errorCreateCategory = (error) => ({
     type: ERROR_CREATE_CATEGORY,
-    payload: message,
+    payload: error,
   });

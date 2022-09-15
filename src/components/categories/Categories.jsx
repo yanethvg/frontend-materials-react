@@ -43,7 +43,7 @@ function Categories() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // manage data with modan and state
+    // manage data with modal and state
     const handleEdit = (category) => {
         setCategory(category);
         handleShow()
@@ -57,14 +57,16 @@ function Categories() {
     return (
         <>
         <h1 className='d-flex justify-content-center'>Categories</h1>
-        <div style={{ marginTop: "2rem"}}>
-        <Form.Group controlId="formBasicSearch" className='d-flex flex-row'>
-            <Form.Control 
-                type="search" 
-                placeholder="Enter name or description" 
-                style={{ marginRight: "1rem"}} 
-                onChange={(e) => setSearch(e.target.value)} />
-        </Form.Group>
+        <div style={{ marginTop: "2rem"}} >
+            <Form.Group controlId="formBasicSearch" className='d-flex flex-row'>
+                <Form.Control 
+                    type="search" 
+                    placeholder="Enter name or description" 
+                    style={{ marginRight: "1rem"}} 
+                    onChange={(e) => setSearch(e.target.value)} />
+                    <Button variant="success" onClick={() => handleShow()}>Create </Button> 
+            </Form.Group>
+           
         </div>
         {
             loading ? 
@@ -110,9 +112,10 @@ function Categories() {
                 />
             )}
        </div>
-       { category && (
+       {/* { category && (
         <Category show={show} handleCleanData={handleCleanData} category={category}/>
-       )}
+       )} */}
+        <Category show={show} handleCleanData={handleCleanData} category={category}/>
         </>
     );
 }

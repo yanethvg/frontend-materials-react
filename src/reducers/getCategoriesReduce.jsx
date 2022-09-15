@@ -49,20 +49,21 @@ import {
           return {
             ...state,
             error: null,
-            messageError: null
+            loading: true,
+            categories: state.categories
           }
       case COMPLETE_CREATE_CATEGORY:
           return {
             ...state,
             error: null,
-            messageSuccess: "Category created successfully",
-            categories: [...state.categories, action.payload.data]
+            loading: false,
+            categories: [action.payload.data, ...state.categories]
           }
       case ERROR_CREATE_CATEGORY:
           return {
             ...state,
-            error: true,
-            messageError: action.payload
+            error: action.payload,
+            loading: false
           }
       case START_UPDATE_CATEGORY:
             return {

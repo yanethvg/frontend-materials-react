@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { updateCategoryAction } from "../../actions/updateCategoryAction";
+import { createCategoryAction } from "../../actions/createCategoryAction";
 
 const Category = ({ show, handleCleanData, category}) => {
     const [name, setName] = useState('')
@@ -15,8 +16,8 @@ const Category = ({ show, handleCleanData, category}) => {
     const error = useSelector(state => state.categories.error);
     
     const dispatch = useDispatch()
-    // const createCategory = (category, token) =>
-    //     dispatch(createCategoryAction(category, token))
+    const createCategory = (category, token) =>
+        dispatch(createCategoryAction(category, token))
     const updateCategory = (id, category, token) =>
         dispatch(updateCategoryAction(id, category, token))
 
@@ -33,24 +34,18 @@ const Category = ({ show, handleCleanData, category}) => {
     const clickSubmit = e => {
         e.preventDefault()
         let categorySend = {}
-        // if (name.trim() !== '' && description.trim() !== '') {
-        //     categorySend = {
-        //         name,
-        //         description
-        //     }
-        // }
         categorySend = {
             name,
             description
         }
-        categorySend
+        category
             ? updateCategory(category.id, categorySend, token)
             : createCategory(categorySend, token)
-        if(!error) {
-            setName('');
-            setDescription('');
-            handleandleCleanData();
-        }
+        // if(!error) {
+        //     setName('');
+        //     setDescription('');
+            
+        // }
     }
     return (
          <Modal
