@@ -2,12 +2,14 @@ import {
     START_GET_CATEGORIES,
     COMPLETE_GET_CATEGORIES,
     ERROR_GET_CATEGORIES,
-  } from "../types";
+} from "../types";
+
+import {API_URL} from '../config';
   
   export function getCategoriesAction(access_token,page) {
     return (dispatch) => {
       dispatch(startGetCategories());
-      fetch(`http://localhost/api/categories/paginate?page=${page}`, {
+      fetch(`${API_URL}/api/categories/paginate?page=${page}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${access_token}`,

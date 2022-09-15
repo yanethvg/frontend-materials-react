@@ -1,11 +1,11 @@
 import { START_LOGIN, COMPLETE_LOGIN,  ERROR_LOGIN } from "../types";
 import {notify} from '../components/utils/Notify';
+import {API_URL} from '../config';
 
 export function getLogin(user) {
     return (dispatch) => {
         dispatch(startLogin());
-        // get auth api
-        fetch(`http://localhost/api/login`, {
+        fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: {
             Accept: "application/json",

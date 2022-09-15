@@ -1,12 +1,13 @@
 import { COMPLETE_LOGOUT, START_LOGOUT, ERROR_LOGOUT } from "../types";
 import {notify} from '../components/utils/Notify';
+import {API_URL} from '../config';
 
 export function getLogout(access_token) {
   return (dispatch) => {
     dispatch(startLogout());
     localStorage.removeItem("auth");
     // get auth api
-    fetch(`http://localhost/api/logout`, {
+    fetch(`${API_URL}/api/logout`, {
       method: "POST",
       headers: {
         Accept: "application/json",
