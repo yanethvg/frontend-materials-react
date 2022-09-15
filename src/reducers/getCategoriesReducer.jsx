@@ -11,7 +11,7 @@ import {
   START_DELETE_CATEGORY,
   COMPLETE_DELETE_CATEGORY,
   ERROR_DELETE_CATEGORY,
-} from "../types";
+} from "../types/category";
 
 const initialState = {
   categories: [],

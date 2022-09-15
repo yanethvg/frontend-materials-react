@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import LoginReducer from "./LoginReducer";
-import getCategoriesReduce from "./getCategoriesReduce";
+import getCategoriesReducer from "./getCategoriesReducer";
+import getMeasuresReducer from "./getMeasuresReducer";
 
 export default combineReducers({
   auth: LoginReducer,
-  categories: getCategoriesReduce
+  categories: getCategoriesReducer,
+  unit_measures: getMeasuresReducer,
 });

@@ -2,7 +2,7 @@ import {
     START_CREATE_CATEGORY,
     COMPLETE_CREATE_CATEGORY,
     ERROR_CREATE_CATEGORY,
-  } from "./../../types";
+  } from "./../../types/category";
 import {API_URL} from '../../config';
 import {notify} from '../../components/utils/Notify';
   

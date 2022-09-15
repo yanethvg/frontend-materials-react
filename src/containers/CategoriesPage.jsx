@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState, useTransition , Suspense } from "react";
 //boostrap-react
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 //redux

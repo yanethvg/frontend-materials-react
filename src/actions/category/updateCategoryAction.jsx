@@ -2,7 +2,7 @@ import {
     START_UPDATE_CATEGORY,
     COMPLETE_UPDATE_CATEGORY,
     ERROR_UPDATE_CATEGORY
-} from "./../../types";
+} from "./../../types/category";
 import {API_URL} from '../../config';
 import {notify} from '../../components/utils/Notify';
 
