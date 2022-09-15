@@ -2,9 +2,9 @@ import {
     START_UPDATE_CATEGORY,
     COMPLETE_UPDATE_CATEGORY,
     ERROR_UPDATE_CATEGORY
-} from '../types'
-import {API_URL} from '../config';
-import {notify} from '../components/utils/Notify';
+} from "./../../types";
+import {API_URL} from '../../config';
+import {notify} from '../../components/utils/Notify';
 
   export function updateCategoryAction (id, category, token) {
     return dispatch => {

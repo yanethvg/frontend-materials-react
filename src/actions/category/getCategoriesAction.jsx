@@ -2,9 +2,10 @@ import {
     START_GET_CATEGORIES,
     COMPLETE_GET_CATEGORIES,
     ERROR_GET_CATEGORIES,
-} from "../types";
+} from "./../../types";
 
-import {API_URL} from '../config';
+import {API_URL} from '../../config';
+import {notify} from '../../components/utils/Notify';
   
   export function getCategoriesAction(access_token,page, search) {
     return (dispatch) => {
@@ -19,6 +20,7 @@ import {API_URL} from '../config';
           return response.json();
         })
         .then(function (response) {
+          notify('Categories ready', 'success');
           dispatch(completeGetCategories(response));
         })
         .catch((error) => {

@@ -5,8 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { updateCategoryAction } from "../../actions/updateCategoryAction";
-import { createCategoryAction } from "../../actions/createCategoryAction";
+import { updateCategoryAction } from "../../actions/category/updateCategoryAction";
+import { createCategoryAction } from "../../actions/category/createCategoryAction";
 
 const Category = ({ show, handleCleanData, category}) => {
     const [name, setName] = useState('')
