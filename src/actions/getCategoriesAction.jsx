@@ -6,10 +6,10 @@ import {
 
 import {API_URL} from '../config';
   
-  export function getCategoriesAction(access_token,page) {
+  export function getCategoriesAction(access_token,page, search) {
     return (dispatch) => {
       dispatch(startGetCategories());
-      fetch(`${API_URL}/api/categories/paginate?page=${page}`, {
+      fetch(`${API_URL}/api/categories/paginate?page=${page}&search=${search}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${access_token}`,

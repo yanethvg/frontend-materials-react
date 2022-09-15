@@ -2,6 +2,7 @@ import React,{useCallback, useEffect , useState } from 'react';
 //boostrap-react
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../../actions/getCategoriesAction";
@@ -12,6 +13,7 @@ function Categories() {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth.access);
     const [page, setPage] = useState(1);
+    const [ search, setSearch ] = useState('');
 
     const categories = useSelector((state) => state.categories.categories);
     const loading = useSelector((state) => state.categories.loading);
@@ -22,13 +24,22 @@ function Categories() {
     }, []);
 
     useEffect(() => {
-        const loadCategories = () => dispatch(getCategoriesAction(auth.access_token, page));
+        const loadCategories = () => dispatch(getCategoriesAction(auth.access_token, page, search));
         loadCategories();
-      }, [ dispatch, auth.access_token, page]);
+      }, [ dispatch, auth.access_token, page, search]);
 
     return (
         <>
         <h1 className='d-flex justify-content-center'>Categories</h1>
+        <div style={{ marginTop: "2rem"}}>
+        <Form.Group controlId="formBasicSearch" className='d-flex flex-row'>
+            <Form.Control 
+                type="search" 
+                placeholder="Enter name or description" 
+                style={{ marginRight: "1rem"}} 
+                onChange={(e) => setSearch(e.target.value)} />
+        </Form.Group>
+        </div>
         {
             loading ? 
             <div className='d-flex justify-content-center'>
@@ -41,6 +52,7 @@ function Categories() {
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Materials Quantity</th>
                 <th>Created</th>
                 <th>Action</th>
                 </tr>
@@ -51,9 +63,10 @@ function Categories() {
                         <td>{category.id}</td>
                         <td>{category.name}</td>
                         <td>{category.description}</td>
+                        <td>{category.materials}</td>
                         <td>{category.created_at}</td>
                         <td> 
-                            <Button variant="primary">Edit</Button> {'  '}{'  '}
+                            <Button variant="info">Edit</Button> {'  '}{'  '}
                             <Button variant="danger">Delete</Button>
                         </td>
                         </tr>
