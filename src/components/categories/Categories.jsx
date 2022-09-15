@@ -3,17 +3,26 @@ import React,{useCallback, useEffect , useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../../actions/getCategoriesAction";
+// componentes utils 
 import CustomPagination from '../basic/CustomPagination';
 import Loading from '../utils/Loading';
+// custom componentes
+import { Category } from './Category';
 
 function Categories() {
     const dispatch = useDispatch();
+    // getting token
     const auth = useSelector(state => state.auth.access);
+    // manage pagination and search
     const [page, setPage] = useState(1);
     const [ search, setSearch ] = useState('');
+
+    // saving and getting category
+    const [category, setCategory] = useState(undefined);
 
     const categories = useSelector((state) => state.categories.categories);
     const loading = useSelector((state) => state.categories.loading);
@@ -27,6 +36,23 @@ function Categories() {
         const loadCategories = () => dispatch(getCategoriesAction(auth.access_token, page, search));
         loadCategories();
       }, [ dispatch, auth.access_token, page, search]);
+
+    // modal configuration
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    // manage data with modan and state
+    const handleEdit = (category) => {
+        setCategory(category);
+        handleShow()
+    }
+
+    const handleCleanData = () => {
+        setCategory(undefined);
+        handleClose();
+    }
 
     return (
         <>
@@ -63,10 +89,10 @@ function Categories() {
                         <td>{category.id}</td>
                         <td>{category.name}</td>
                         <td>{category.description}</td>
-                        <td>{category.materials}</td>
+                        <td>{category.materials || 0 }</td>
                         <td>{category.created_at}</td>
                         <td> 
-                            <Button variant="info">Edit</Button> {'  '}{'  '}
+                            <Button variant="info" onClick={() => handleEdit(category)}>Edit</Button> {'  '}{'  '}
                             <Button variant="danger">Delete</Button>
                         </td>
                         </tr>
@@ -84,6 +110,9 @@ function Categories() {
                 />
             )}
        </div>
+       { category && (
+        <Category show={show} handleCleanData={handleCleanData} category={category}/>
+       )}
         </>
     );
 }
