@@ -34,7 +34,6 @@ import {notify} from '../../components/utils/Notify';
               }
         })
         .catch(error => {
-            console.log("catch", error)
             dispatch(errorUpdateCategory(error))
         })
     }

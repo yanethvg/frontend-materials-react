@@ -15,9 +15,12 @@ const Category = ({ show, handleCleanData, category}) => {
     const token = useSelector(state => state.auth.access.access_token);
     const error = useSelector(state => state.categories.error);
     
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
     const createCategory = (category, token) =>
-        dispatch(createCategoryAction(category, token))
+      dispatch(createCategoryAction(category, token));
+
+      
     const updateCategory = (id, category, token) =>
         dispatch(updateCategoryAction(id, category, token))
 
@@ -41,11 +44,6 @@ const Category = ({ show, handleCleanData, category}) => {
         category
             ? updateCategory(category.id, categorySend, token)
             : createCategory(categorySend, token)
-        // if(!error) {
-        //     setName('');
-        //     setDescription('');
-            
-        // }
     }
     return (
          <Modal
@@ -56,7 +54,7 @@ const Category = ({ show, handleCleanData, category}) => {
             >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                Prueba
+                    {category ? 'Edit Category' : 'Create Category'}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -83,6 +81,7 @@ const Category = ({ show, handleCleanData, category}) => {
                         <Form.Control
                             type="description"
                             placeholder="Enter description"
+                            as="textarea" rows={3}
                             value={description || ''}
                             onChange={(e) => setDescription(e.target.value)}
                         />
