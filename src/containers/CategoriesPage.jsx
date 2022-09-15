@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useTransition , Suspense } from "react";
 //boostrap-react
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -6,12 +6,13 @@ import Form from "react-bootstrap/Form";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../actions/category/getCategoriesAction";
-import { deleteCategoryAction} from "../actions/category/deleteCategoryAction";
+import { deleteCategoryAction } from "../actions/category/deleteCategoryAction";
 // componentes utils
 import CustomPagination from "../components/basic/CustomPagination";
 import Loading from "../components/utils/Loading";
 // custom componentes
 import { Category } from "../components/categories/Category";
+import { Categories } from "../components/categories/Categories";
 
 function CategoriesPage() {
   const dispatch = useDispatch();
@@ -28,17 +29,20 @@ function CategoriesPage() {
   const loading = useSelector((state) => state.categories.loading);
   const total = useSelector((state) => state.categories.pages);
 
+  const [inTransition, startTransition] = useTransition();
+
   const handleChangePage = useCallback((page) => {
     setPage(page);
   }, []);
-  
 
   useEffect(() => {
     const loadCategories = () =>
       dispatch(getCategoriesAction(auth.access_token, page, search));
-    loadCategories();
+      startTransition(() => {
+         loadCategories();
+      });
+    // loadCategories();
   }, [dispatch, auth.access_token, page, search]);
-
 
   // delete category
   const deleteCategory = (id, token) =>
@@ -46,7 +50,7 @@ function CategoriesPage() {
 
   const handleDelete = (id) => {
     deleteCategory(id, auth.access_token);
-};
+  };
 
   // modal configuration
   const [show, setShow] = useState(false);
@@ -81,53 +85,29 @@ function CategoriesPage() {
           </Button>
         </Form.Group>
       </div>
-      {loading ? (
+      {inTransition && !loading ? (
         <div className="d-flex justify-content-center">
           <Loading type={"spin"} color={"#0000ff"} />
         </div>
-      ) : (
-        <Table striped bordered hover variant="dark" className="mt-3">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Materials Quantity</th>
-              <th>Created</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((category) => (
-              <tr key={category.id}>
-                <td>{category.id}</td>
-                <td>{category.name}</td>
-                <td>{category.description}</td>
-                <td>{category.materials || 0}</td>
-                <td>{category.created_at}</td>
-                <td>
-                  <Button variant="info" onClick={() => handleEdit(category)}>
-                    Edit
-                  </Button>{" "}
-                  {"  "}
-                  {"  "}
-                  <Button variant="danger" onClick={() => handleDelete(category.id)}>Delete</Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-      <div className="d-flex justify-content-center">
-        {total > 1 && loading == false && (
+      ) : null}
+      <Suspense>
+        <Categories
+          categories={categories}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      </Suspense>
+
+      {total > 1 && loading == false && (
+        <div className="d-flex justify-content-center">
           <CustomPagination
             className="justify-content-center"
             total={total}
             current={page}
             onChangePage={handleChangePage}
           />
-        )}
-      </div>
+        </div>
+      )}
       <Category
         show={show}
         handleCleanData={handleCleanData}
