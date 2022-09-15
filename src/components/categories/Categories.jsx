@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../../actions/getCategoriesAction";
 import CustomPagination from '../basic/CustomPagination';
+import Loading from '../utils/Loading';
 
 function Categories() {
     const dispatch = useDispatch();
@@ -30,7 +31,10 @@ function Categories() {
         <h1 className='d-flex justify-content-center'>Categories</h1>
         {
             loading ? 
-            <p className='d-flex justify-content-center'>Loading...</p>: 
+            <div className='d-flex justify-content-center'>
+                <Loading type={'spin'} color={'#0000ff'} />
+            </div>
+            : 
             <Table striped bordered hover variant="dark" className='mt-3'>
             <thead>
                 <tr>
