@@ -43,6 +43,7 @@ const Measure = ({ show, handleCleanData, unit_measure }) => {
       description,
       abbreviate,
     };
+    console.log("saber", error);
     unit_measure
       ? updateUnitMeasure(unit_measure.id, data, token)
       : createUnitMeasure(data, token);

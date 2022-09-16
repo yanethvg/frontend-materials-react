@@ -29,7 +29,7 @@ import {notify} from '../../components/utils/Notify';
                 
               } else {
                 notify('Updated unit measure successfully', 'success');
-                dispatch(completeUnitMeasure(response))
+                dispatch(completeUpdateUnitMeasure(response))
                
               }
         })
