@@ -45,7 +45,26 @@ export default function (state = initialState, action) {
         loading: false,
         messageError: action.payload,
       };
-
+    case START_CREATE_MEASURE:
+      return {
+        ...state,
+        error: null,
+        loading: true,
+        unit_measures: state.unit_measures,
+      };
+    case COMPLETE_CREATE_MEASURE:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        unit_measures: [action.payload.data, ...state.unit_measures],
+      };
+    case ERROR_CREATE_MEASURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     case START_UPDATE_MEASURE:
       return {
         ...state,

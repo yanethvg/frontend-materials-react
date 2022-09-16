@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { updateUnitMeasureAction } from "../../actions/measure/updateUnitMeasureAction";
-// import { createMeasureAction } from "../../actions/category/createCategoryAction";
+import { createUnitMeasureAction } from "../../actions/measure/createUnitMeasureAction";
 
 const Measure = ({ show, handleCleanData, unit_measure }) => {
   const [name, setName] = useState("");
@@ -14,12 +14,12 @@ const Measure = ({ show, handleCleanData, unit_measure }) => {
   const [description, setDescription] = useState("");
 
   const token = useSelector((state) => state.auth.access.access_token);
-  const error = useSelector((state) => state.categories.error);
+  const error = useSelector((state) => state.unit_measures.error);
 
   const dispatch = useDispatch();
 
-  //   const createCategory = (category, token) =>
-  //     dispatch(createCategoryAction(category, token));
+  const createUnitMeasure = (unit_measure, token) =>
+    dispatch(createUnitMeasureAction(unit_measure, token));
 
   const updateUnitMeasure = (id, unit_measure, token) =>
     dispatch(updateUnitMeasureAction(id, unit_measure, token));
@@ -43,9 +43,9 @@ const Measure = ({ show, handleCleanData, unit_measure }) => {
       description,
       abbreviate,
     };
-    console.log(data);
-    unit_measure ? updateUnitMeasure(unit_measure.id, data, token) : null;
-    //   : createCategory(data, token)
+    unit_measure
+      ? updateUnitMeasure(unit_measure.id, data, token)
+      : createUnitMeasure(data, token);
   };
   return (
     <Modal

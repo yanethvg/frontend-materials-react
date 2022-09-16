@@ -11,6 +11,7 @@ import Form from "react-bootstrap/Form";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { getUnitMeasuresAction } from "../actions/measure/getUnitMeasuresAction";
+import { deleteUnitMeasureAction } from "../actions/measure/deleteUnitMeasureAction";
 // componentes utils
 import CustomPagination from "../components/basic/CustomPagination";
 import Loading from "../components/utils/Loading";
