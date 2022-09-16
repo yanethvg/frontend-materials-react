@@ -46,6 +46,51 @@ export default function (state = initialState, action) {
         messageError: action.payload,
       };
 
+    case START_UPDATE_MEASURE:
+      return {
+        ...state,
+        error: null,
+        loading: true,
+      };
+    case COMPLETE_UPDATE_MEASURE:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        unit_measures: state.unit_measures.map((measure) =>
+          measure.id === action.payload.data.id
+            ? (measure = action.payload.data)
+            : measure
+        ),
+      };
+    case ERROR_UPDATE_MEASURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case START_DELETE_MEASURE:
+      return {
+        ...state,
+        error: null,
+        loading: true,
+      };
+    case COMPLETE_DELETE_MEASURE:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        unit_measures: state.unit_measures.filter(
+          (measure) => measure.id !== action.payload.data.id
+        ),
+      };
+    case ERROR_DELETE_MEASURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
     default:
       return state;
   }

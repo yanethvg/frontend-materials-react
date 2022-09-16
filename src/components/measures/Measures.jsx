@@ -26,14 +26,14 @@ const Measures = ({ unit_measures, handleEdit, handleDelete }) => {
             <td>{measure.materials || 0}</td>
             <td>{measure.created_at}</td>
             <td>
-              <Button variant="info" >
+              <Button variant="info" onClick={() => handleEdit(measure)}>
                 Edit
               </Button>{" "}
               {"  "}
               {"  "}
               <Button
                 variant="danger"
-                
+                onClick={() => handleDelete(measure.id)}
               >
                 Delete
               </Button>

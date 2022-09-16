@@ -15,6 +15,7 @@ import { getUnitMeasuresAction } from "../actions/measure/getUnitMeasuresAction"
 import CustomPagination from "../components/basic/CustomPagination";
 import Loading from "../components/utils/Loading";
 import { Measures } from "../components/measures/Measures";
+import { Measure } from "../components/measures/Measure"
 
 function MeasuresPage() {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function MeasuresPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  // saving and getting category
+  // saving and getting unit measure
   const [unit_measure, setUnitMeasure] = useState(undefined);
 
   const unit_measures = useSelector((state) => state.unit_measures.unit_measures);
@@ -45,12 +46,12 @@ function MeasuresPage() {
     });
   }, [dispatch, auth.access_token, page, search]);
 
-  // delete category
-  const deleteCategory = (id, token) =>
-    dispatch(deleteCategoryAction(id, token));
+  // delete unit measure
+  const deleteUnitMeasure = (id, token) =>
+    dispatch(deleteUnitMeasureAction(id, token));
 
   const handleDelete = (id) => {
-    deleteCategory(id, auth.access_token);
+    deleteUnitMeasure(id, auth.access_token);
   };
 
   // modal configuration
@@ -108,11 +109,11 @@ function MeasuresPage() {
           />
         </div>
       )}
-      {/* <Category
+      <Measure
         show={show}
         handleCleanData={handleCleanData}
-        category={category}
-      /> */}
+        unit_measure={unit_measure}
+      />
     </>
   );
 }
