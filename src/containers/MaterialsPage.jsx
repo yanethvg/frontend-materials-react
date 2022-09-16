@@ -11,10 +11,11 @@ import Form from "react-bootstrap/Form";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { getMaterialsAction } from "../actions/material/getMaterialsAction";
-// import { deleteMaterialAction } from "../actions/measure/deleteMaterialAction";
+import { deleteMaterialAction } from "../actions/material/deleteMaterialAction";
 // componentes utils
 import CustomPagination from "../components/basic/CustomPagination";
 import { Materials } from "../components/materials/Materials";
+import { Material } from "../components/materials/Material";
 import Loading from "../components/utils/Loading";
 
 function MaterialsPage() {
@@ -51,12 +52,12 @@ function MaterialsPage() {
   }, [dispatch, auth.access_token, page, search, category, measure]);
 
   // delete material
-  // const deleteMaterial = (id, token) =>
-  //   dispatch(deleteMaterialAction(id, token));
+  const deleteMaterial = (id, token) =>
+    dispatch(deleteMaterialAction(id, token));
 
-  // const handleDelete = (id) => {
-  //   deleteMaterial(id, auth.access_token);
-  // };
+  const handleDelete = (id) => {
+    deleteMaterial(id, auth.access_token);
+  };
 
   // modal configuration
   const [show, setShow] = useState(false);
@@ -65,8 +66,8 @@ function MaterialsPage() {
   const handleShow = () => setShow(true);
 
   // manage data with modal and state
-  const handleEdit = (material) => {
-    setMaterial(material);
+  const handleEdit = (data) => {
+    setMaterial(data);
     handleShow();
   };
 
@@ -100,10 +101,10 @@ function MaterialsPage() {
         <Materials
           materials={materials}
           handleEdit={handleEdit}
-          // handleDelete={handleDelete}
+          handleDelete={handleDelete}
         />
       </Suspense>
-      {total > 1 && loading == false && (
+      {total > 1 && loading == false ? (
         <div className="d-flex justify-content-center">
           <CustomPagination
             className="justify-content-center"
@@ -112,7 +113,16 @@ function MaterialsPage() {
             onChangePage={handleChangePage}
           />
         </div>
+      ) : (
+        <div className="d-flex justify-content-center mt-5">
+          <h2>No results found</h2>
+        </div>
       )}
+      <Material
+        show={show}
+        handleCleanData={handleCleanData}
+        material_list={material}
+      />
     </>
   );
 }

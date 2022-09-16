@@ -5,12 +5,11 @@ import {
 } from "../../types/material";
 
 import {API_URL} from '../../config';
-import {notify} from '../../components/utils/Notify';
   
 export function getMaterialsAction(access_token,page, search, category, measure) {
     return (dispatch) => {
     dispatch(startGetMaterials());
-    let url = `${API_URL}/api/materials?page=${page}&search=${search}`;
+    let url = `${API_URL}/api/materials?page=${page}`;
     if (category) {
         url += `&category=${category}`;
     }
@@ -31,7 +30,6 @@ export function getMaterialsAction(access_token,page, search, category, measure)
         return response.json();
     })
     .then(function (response) {
-        notify('Materials ready', 'success');
         dispatch(completeGetMaterials(response));
     })
     .catch((error) => {
