@@ -11,6 +11,9 @@ import {
   START_DELETE_MEASURE,
   COMPLETE_DELETE_MEASURE,
   ERROR_DELETE_MEASURE,
+  START_GET_LIST_MEASURES,
+  COMPLETE_GET_LIST_MEASURES,
+  ERROR_GET_LIST_MEASURES,
 } from "../types/measure";
 
 const initialState = {
@@ -108,6 +111,28 @@ export default function (state = initialState, action) {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case START_GET_LIST_MEASURES:
+      return {
+        ...state,
+        error: null,
+        loading: true,
+      };
+    case COMPLETE_GET_LIST_MEASURES:
+      return {
+        ...state,
+        unit_measures: action.payload.data,
+        error: null,
+        loading: false,
+      };
+    case ERROR_GET_LIST_MEASURES:
+      return {
+        ...state,
+        unit_measures: [],
+        error: null,
+        loading: false,
+        messageError: action.payload,
       };
 
     default:

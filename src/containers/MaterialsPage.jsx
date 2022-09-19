@@ -12,6 +12,8 @@ import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { getMaterialsAction } from "../actions/material/getMaterialsAction";
 import { deleteMaterialAction } from "../actions/material/deleteMaterialAction";
+import { getCategoriesListAction } from "../actions/category/getCategoriesListAction";
+import { getUnitMeasuresListAction } from "../actions/measure/getUnitMeasureListAction"
 // componentes utils
 import CustomPagination from "../components/basic/CustomPagination";
 import { Materials } from "../components/materials/Materials";
@@ -34,12 +36,29 @@ function MaterialsPage() {
   const materials = useSelector((state) => state.materials.materials);
   const loading = useSelector((state) => state.materials.loading);
   const total = useSelector((state) => state.materials.pages);
+  const categories = useSelector((state) => state.categories.categories);
+  const measures = useSelector ((state) => state.unit_measures.unit_measures);
+  
 
   const [inTransition, startTransition] = useTransition();
 
   const handleChangePage = useCallback((page) => {
     setPage(page);
   }, []);
+
+  //loading all categories
+  const loadCategories = () =>
+    dispatch(getCategoriesListAction(auth.access_token));
+  //loading all unit measures
+  const loadUnitMeasures = () =>
+    dispatch(getUnitMeasuresListAction(auth.access_token));
+
+  // delete material
+  const deleteMaterial = (id, token) =>
+    dispatch(deleteMaterialAction(id, token));
+  const handleDelete = (id) => {
+    deleteMaterial(id, auth.access_token);
+  };
 
   useEffect(() => {
     const loadMaterials = () =>
@@ -49,15 +68,10 @@ function MaterialsPage() {
     startTransition(() => {
       loadMaterials();
     });
+    loadCategories();
+    loadUnitMeasures();
+    
   }, [dispatch, auth.access_token, page, search, category, measure]);
-
-  // delete material
-  const deleteMaterial = (id, token) =>
-    dispatch(deleteMaterialAction(id, token));
-
-  const handleDelete = (id) => {
-    deleteMaterial(id, auth.access_token);
-  };
 
   // modal configuration
   const [show, setShow] = useState(false);
@@ -122,6 +136,8 @@ function MaterialsPage() {
         show={show}
         handleCleanData={handleCleanData}
         material_list={material}
+        categories= {categories}
+        measures= {measures}
       />
     </>
   );

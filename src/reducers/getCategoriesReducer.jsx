@@ -11,6 +11,9 @@ import {
   START_DELETE_CATEGORY,
   COMPLETE_DELETE_CATEGORY,
   ERROR_DELETE_CATEGORY,
+  START_GET_LIST_CATEGORIES,
+  COMPLETE_GET_LIST_CATEGORIES,
+  ERROR_GET_LIST_CATEGORIES,
 } from "../types/category";
 
 const initialState = {
@@ -108,6 +111,27 @@ export default function (state = initialState, action) {
         ...state,
         error: action.payload,
         loading: false,
+      };
+    case START_GET_LIST_CATEGORIES:
+      return {
+        ...state,
+        error: null,
+        loading: true,
+      };
+    case COMPLETE_GET_LIST_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload.data,
+        error: null,
+        loading: false,
+      };
+    case ERROR_GET_LIST_CATEGORIES:
+      return {
+        ...state,
+        categories: [],
+        error: null,
+        loading: false,
+        messageError: action.payload,
       };
     default:
       return state;

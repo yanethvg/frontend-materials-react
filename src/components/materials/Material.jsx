@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateMaterialAction } from "../../actions/material/updateMaterialAction";
 import { createMaterialAction } from "../../actions/material/createMaterialAction";
 
-const Material = ({ show, handleCleanData, material_list }) => {
+const Material = ({ show, handleCleanData, material_list, categories, measures }) => {
   const [material, setMaterial] = useState({});
 
   const token = useSelector((state) => state.auth.access.access_token);
@@ -33,6 +33,7 @@ const Material = ({ show, handleCleanData, material_list }) => {
   }, [material_list, setMaterial, error]);
 
   const clickSubmit = (e) => {
+    console.log(e);
     e.preventDefault();
     let data = {
       ...material,
@@ -88,6 +89,40 @@ const Material = ({ show, handleCleanData, material_list }) => {
                 {error.description}
               </div>
             ) : null}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+            <Form.Label>Category</Form.Label>
+            <Form.Select
+              onChange={(e) =>
+                setMaterial({ ...material, category: e.target.value })
+              }
+              value={material.category?.id || ""}
+            >
+              <option>Choose a Category</option>
+              {
+              categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+            <Form.Label>Unit Measure</Form.Label>
+            <Form.Select
+              onChange={(e) =>
+                setMaterial({ ...material, measure: e.target.value })
+              }
+              value={material.measure?.id || ""}
+            >
+              <option>Choose an Unit Measure</option>
+              {
+              measures.map((measure) => (
+                <option key={measure.id} value={measure.id}>
+                  {measure.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
         </Form>
       </Modal.Body>
