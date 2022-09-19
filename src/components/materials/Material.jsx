@@ -8,7 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateMaterialAction } from "../../actions/material/updateMaterialAction";
 import { createMaterialAction } from "../../actions/material/createMaterialAction";
 
-const Material = ({ show, handleCleanData, material_list, categories, measures }) => {
+const Material = ({
+  show,
+  handleCleanData,
+  material_list,
+  categories,
+  measures,
+}) => {
   const [material, setMaterial] = useState({});
 
   const token = useSelector((state) => state.auth.access.access_token);
@@ -72,6 +78,28 @@ const Material = ({ show, handleCleanData, material_list, categories, measures }
               </div>
             ) : null}
           </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Stock Minim</Form.Label>
+            <Form.Control
+              type="stock_minim"
+              placeholder="Enter Stock Minim"
+              autoFocus
+              value={material.stock_minim || ""}
+              onChange={(e) =>
+                setMaterial({ ...material, stock_minim: e.target.stock_minim })
+              }
+            />
+            {error && error.stock_minim ? (
+              <div className="alert alert-danger mt-1" role="alert">
+                {error.stock_minim}
+              </div>
+            ) : null}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Is Active?</Form.Label>
+            <Form.Check type="radio" id="true" label="Yes"  checked={material.is_active === true} />
+            <Form.Check type="radio" id="false "label="No" checked={material.is_active === false } />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -99,8 +127,7 @@ const Material = ({ show, handleCleanData, material_list, categories, measures }
               value={material.category?.id || ""}
             >
               <option>Choose a Category</option>
-              {
-              categories.map((category) => (
+              {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
@@ -116,8 +143,7 @@ const Material = ({ show, handleCleanData, material_list, categories, measures }
               value={material.measure?.id || ""}
             >
               <option>Choose an Unit Measure</option>
-              {
-              measures.map((measure) => (
+              {measures.map((measure) => (
                 <option key={measure.id} value={measure.id}>
                   {measure.name}
                 </option>
