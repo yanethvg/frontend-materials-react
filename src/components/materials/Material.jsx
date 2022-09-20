@@ -32,19 +32,44 @@ const Material = ({
     if (material_list) {
       setMaterial({
         ...material_list,
+        is_active: material_list.is_active ? "true" : "false",
       });
     } else {
-      setMaterial({});
+      setMaterial({
+        name: "",
+        category: "",
+        measure: "",
+        description: "",
+        stock_minim: "",
+        is_active: "true",
+      });
     }
   }, [material_list, setMaterial, error]);
 
   const clickSubmit = (e) => {
-    console.log(e);
     e.preventDefault();
     let data = {
       ...material,
+      is_active: Boolean(material.is_active),
+      stock_minim: parseInt(material.stock_minim),
+      category_id: parseInt(material.category),
+      unit_measure_id: parseInt(material.measure),
     };
     material_list ? update(material_list.id, data, token) : create(data, token);
+  };
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+    setMaterial({
+      ...material,
+      [id]: value,
+    });
+  };
+
+  const handleOptionChange = (event) => {
+    setMaterial({
+      ...material,
+      is_active: event.target.value,
+    });
   };
   return (
     <Modal
@@ -61,16 +86,13 @@ const Material = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type="name"
               placeholder="Enter name"
               autoFocus
-              value={material.name || ""}
-              onChange={(e) =>
-                setMaterial({ ...material, name: e.target.value })
-              }
+              value={material.name}
+              onChange={(e) => handleChange(e)}
             />
             {error && error.name ? (
               <div className="alert alert-danger mt-1" role="alert">
@@ -78,16 +100,12 @@ const Material = ({
               </div>
             ) : null}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Group className="mb-3" controlId="stock_minim">
             <Form.Label>Stock Minim</Form.Label>
             <Form.Control
-              type="stock_minim"
               placeholder="Enter Stock Minim"
-              autoFocus
-              value={material.stock_minim || ""}
-              onChange={(e) =>
-                setMaterial({ ...material, stock_minim: e.target.stock_minim })
-              }
+              value={material.stock_minim}
+              onChange={(e) => handleChange(e)}
             />
             {error && error.stock_minim ? (
               <div className="alert alert-danger mt-1" role="alert">
@@ -95,22 +113,31 @@ const Material = ({
               </div>
             ) : null}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Group className="mb-3" controlId="is_active">
             <Form.Label>Is Active?</Form.Label>
-            <Form.Check type="radio" id="true" label="Yes"  checked={material.is_active === true} />
-            <Form.Check type="radio" id="false "label="No" checked={material.is_active === false } />
+            <Form.Check
+              type="radio"
+              label="Yes"
+              value="true"
+              checked={material.is_active === "true"}
+              onChange={(e) => handleOptionChange(e)}
+            />
+            <Form.Check
+              type="radio"
+              label="No"
+              value="false"
+              checked={material.is_active === "false"}
+              onChange={(e) => handleOptionChange(e)}
+            />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+          <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
-              type="description"
               placeholder="Enter description"
               as="textarea"
               rows={3}
-              value={material.description || ""}
-              onChange={(e) =>
-                setMaterial({ ...material, description: e.target.value })
-              }
+              value={material.description}
+              onChange={(e) => handleChange(e)}
             />
             {error && error.description ? (
               <div className="alert alert-danger mt-1" role="alert">
@@ -118,13 +145,11 @@ const Material = ({
               </div>
             ) : null}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+          <Form.Group className="mb-3" controlId="category">
             <Form.Label>Category</Form.Label>
             <Form.Select
-              onChange={(e) =>
-                setMaterial({ ...material, category: e.target.value })
-              }
-              value={material.category?.id || ""}
+              onChange={(e) => handleChange(e)}
+              value={material.category?.id}
             >
               <option>Choose a Category</option>
               {categories.map((category) => (
@@ -134,13 +159,11 @@ const Material = ({
               ))}
             </Form.Select>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+          <Form.Group className="mb-3" controlId="measure">
             <Form.Label>Unit Measure</Form.Label>
             <Form.Select
-              onChange={(e) =>
-                setMaterial({ ...material, measure: e.target.value })
-              }
-              value={material.measure?.id || ""}
+              onChange={(e) => handleChange(e)}
+              value={material.measure?.id}
             >
               <option>Choose an Unit Measure</option>
               {measures.map((measure) => (

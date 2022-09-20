@@ -7,6 +7,7 @@ import {
   import { notify } from "../../components/utils/Notify";
   
   export function createMaterialAction(material, token) {
+    console.log(material);
     return (dispatch) => {
       dispatch(startCreate());
       fetch(`${API_URL}/api/materials`, {
