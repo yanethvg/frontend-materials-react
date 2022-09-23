@@ -1,7 +1,6 @@
 import React from "react";
 import { useRoutes,Route, Routes } from "react-router-dom";
 import { HomePage } from "./containers/HomePage";
-import { ProfilePage } from "./containers/ProfilePage";
 import { MaterialsPage } from "./containers/MaterialsPage";
 import { MeasuresPage } from "./containers/MeasuresPage";
 import { CategoriesPage } from "./containers/CategoriesPage";
@@ -12,24 +11,22 @@ import {PrivateRoute } from "./components/auth/PrivateRoute";
 
 const routes = [
   {
-      path: '/profile',
-      element: <ProfilePage />,
-      text: 'Profile'
-  },
-  {
       path: '/materials',
       element: <MaterialsPage />,
-      text: 'Materials'
+      text: 'Materials',
+      permission: "materials",
   },
   {
     path: '/categories',
     element: <CategoriesPage />,
-    text: 'Categories'
+    text: 'Categories',
+    permission: "categories",
   },
   {
     path: '/measures',
     element: <MeasuresPage />,
-    text: 'Measures'
+    text: 'Measures',
+    permission: "unit_measures",
   },
 ]
 
@@ -45,7 +42,7 @@ function Routers() {
             key={index}
             path={route.path}
             exact
-            element={<PrivateRoute/>}
+            element={<PrivateRoute permission={route.permission}/>}
           >
              <Route path={route.path} element={route.element}/>
           </Route>

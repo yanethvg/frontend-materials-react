@@ -44,17 +44,20 @@ const Material = ({
         is_active: "true",
       });
     }
+    console.log(material);
   }, [material_list, setMaterial, error]);
 
   const clickSubmit = (e) => {
     e.preventDefault();
     let data = {
-      ...material,
-      is_active: Boolean(material.is_active),
+      name: material.name,
       stock_minim: parseInt(material.stock_minim),
-      category_id: parseInt(material.category),
-      unit_measure_id: parseInt(material.measure),
+      is_active: material.is_active === "true" ?  true : false, 
+      description: material.description,
+      category_id: typeof material.category === 'object'? material.category.id : material.category,
+      unit_measure_id: typeof material.measure === 'object'? material.measure.id : material.measure,
     };
+    console.log(data);
     material_list ? update(material_list.id, data, token) : create(data, token);
   };
   const handleChange = (event) => {
@@ -158,6 +161,11 @@ const Material = ({
                 </option>
               ))}
             </Form.Select>
+            {error && error.category_id ? (
+              <div className="alert alert-danger mt-1" role="alert">
+                {error.category_id}
+              </div>
+            ) : null}
           </Form.Group>
           <Form.Group className="mb-3" controlId="measure">
             <Form.Label>Unit Measure</Form.Label>
@@ -172,6 +180,11 @@ const Material = ({
                 </option>
               ))}
             </Form.Select>
+            {error && error.unit_measure_id ? (
+              <div className="alert alert-danger mt-1" role="alert">
+                {error.unit_measure_id}
+              </div>
+            ) : null}
           </Form.Group>
         </Form>
       </Modal.Body>
